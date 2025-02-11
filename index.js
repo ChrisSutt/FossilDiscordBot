@@ -1,36 +1,40 @@
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require("discord.js");
-const fs = require("fs");
+const { sendFact } = require("./factHandler");
+const { sendTriviaQuestion, checkTriviaAnswer } = require("./triviaHandler");
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
-// Load facts from JSON file
-let dinoFacts;
-try {
-    const rawData = fs.readFileSync("./facts.json");
-    const factsData = JSON.parse(rawData);
-    dinoFacts = factsData.dinoFacts;
-    console.log(`✅ Loaded ${dinoFacts.length} facts from JSON file.`);
-} catch (error) {
-    console.error("❌ Error loading facts.json:", error);
-}
+client.on("messageCreate",(message) => {
+    if (message.author.bot) return;
 
-// Function to send a random dinosaur fact
-function sendFact() {
-    const channel = client.channels.cache.get(process.env.CHANNEL_ID);
-    if (channel && dinoFacts.length > 0) {
-        const randomFact = dinoFacts[Math.floor(Math.random() * dinoFacts.length)];
-        channel.send(randomFact);
-    } else {
-        console.error("⚠️ No facts loaded or channel not found!");
+    //Fact Command
+
+    if (message.content.toLowerCase() === "!fact") {
+        sendFact(message.channel);
     }
-}
 
-// Bot is ready
-client.once("ready", () => {
-    console.log(`✅ Logged in as ${client.user.tag}`);
-    setInterval(sendFact, 36000000); // 15-minute interval
-});
+    //Trivia Command
+    
+    if (message.content.toLowerCase() === "!trivia") {
+        sendTriviaQuestion(message.channel);
+    }
 
-// Log in to Discord
-client.login(process.env.TOKEN);
+    //handle Trivia Answer
+    checkTriviaAnswer(message);
+    });
+
+    //Bot ready
+    client.once("ready", () => {
+        console.log(` Logged in as ${client.user.tag}`);
+
+        //Auto-send dino facts
+        setInterval(() => {
+            const channel = client.channels.cache.get(process.env.CHANNEL_ID);
+            if(channel) {
+                sendFact(channel);
+            }
+        }, 360000000); //10 hours
+    });
+
+    client.login(process.env.TOKEN);
