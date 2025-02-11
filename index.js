@@ -29,7 +29,7 @@ function sendFact() {
 // Bot is ready
 client.once("ready", () => {
     console.log(`✅ Logged in as ${client.user.tag}`);
-    setInterval(sendFact, 100000); // 15-minute interval
+    setInterval(sendFact, 36000000); // 15-minute interval
 });
 
 // Log in to Discord
