@@ -1,11 +1,13 @@
 # **FossilBot**  
 
-FossilBot is a Discord bot designed to share random dinosaur facts at regular intervals. Currently in its early development stages, this project aims to provide an engaging and educational experience for users interested in prehistoric life.  
+FossilBot is a Discord bot designed to share random dinosaur facts and engage users with interactive trivia. Currently in its early development stages, this project aims to provide an educational and entertaining experience for dinosaur enthusiasts.
 
 ## **Features**  
 
-- Automatically posts random dinosaur facts every 15 minutes  
-- Extensive fact database stored in JSON for easy updates and scalability  
+- Automatically posts random dinosaur facts every **10 hours**  
+- Command-based fact retrieval (`!fact`)  
+- Interactive multiple-choice dinosaur trivia (`!trivia`)  
+- Expanding trivia database with over 50+ questions  
 - Lightweight and efficient, designed for seamless integration into Discord servers  
 
 ## **Installation**  
@@ -37,22 +39,28 @@ FossilBot is a Discord bot designed to share random dinosaur facts at regular in
    node index.js
    ```  
 
+## **Commands**  
+
+- `!fact` – Retrieves a random dinosaur fact  
+- `!trivia` – Starts a multiple-choice trivia question  
+- Respond with `A, B, C, or D` to answer trivia questions  
+
 ## **Roadmap**  
 
 ### **Short-Term Goals**  
-- Implement command-based fact retrieval (`/fact`)  
-- Expand the fact database with additional categories  
-- Improve error handling and logging  
+- Add a trivia scoring system and leaderboard  
+- Introduce timed trivia challenges  
+- Expand the trivia question database  
 
 ### **Long-Term Goals**  
 - Allow users to submit and suggest facts  
-- Develop an interactive trivia feature  
-- Implement database storage for scalability  
+- Implement role-based permissions for commands  
+- Store trivia scores and fact submissions in a database  
 - Deploy to a cloud hosting service for 24/7 availability  
 
 ## **Contributing**  
 
-Contributions are welcome. If you have suggestions or would like to contribute to the development of DinoFactsBot, please open an issue or submit a pull request.  
+Contributions are welcome. If you have suggestions or would like to contribute to the development of FossilBot, please open an issue or submit a pull request.  
 
 ## **License**  
 
@@ -60,4 +68,5 @@ This project is licensed under the MIT License. See `LICENSE` for details.
 
 ## **Contact**  
 
-For inquiries or support, please reach out via GitHub Issues or the associated Discord community.  
+For inquiries or support, please reach out via GitHub Issues or the associated Discord community.
+

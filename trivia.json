@@ -19,6 +19,111 @@
             "question": "Which dinosaur is believed to have had feathers?",
             "choices": ["A. Spinosaurus", "B. Stegosaurus", "C. Velociraptor", "D. Ankylosaurus"],
             "answer": "C"
+        },
+        {
+            "question": "What was the largest carnivorous dinosaur?",
+            "choices": ["A. T. rex", "B. Spinosaurus", "C. Giganotosaurus", "D. Allosaurus"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur had three horns on its face?",
+            "choices": ["A. Triceratops", "B. Stegosaurus", "C. Brachiosaurus", "D. Pachycephalosaurus"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur had a sail-like structure on its back?",
+            "choices": ["A. Diplodocus", "B. Stegosaurus", "C. Spinosaurus", "D. Iguanodon"],
+            "answer": "C"
+        },
+        {
+            "question": "What is the name of the first dinosaur to be scientifically described?",
+            "choices": ["A. Iguanodon", "B. Megalosaurus", "C. Velociraptor", "D. Diplodocus"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur is often called the 'Tyrant Lizard King'?",
+            "choices": ["A. Allosaurus", "B. Spinosaurus", "C. Tyrannosaurus rex", "D. Carnotaurus"],
+            "answer": "C"
+        },
+        {
+            "question": "Which herbivorous dinosaur had a clubbed tail used for defense?",
+            "choices": ["A. Stegosaurus", "B. Ankylosaurus", "C. Brachiosaurus", "D. Iguanodon"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur is believed to be the smartest?",
+            "choices": ["A. Velociraptor", "B. Triceratops", "C. Stegosaurus", "D. Brachiosaurus"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur had a row of bony plates along its back?",
+            "choices": ["A. Triceratops", "B. Stegosaurus", "C. Velociraptor", "D. Brachiosaurus"],
+            "answer": "B"
+        },
+        {
+            "question": "What was the first known flying reptile?",
+            "choices": ["A. Pterodactyl", "B. Archaeopteryx", "C. Pteranodon", "D. Rhamphorhynchus"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur is thought to have had the most powerful bite?",
+            "choices": ["A. Allosaurus", "B. Spinosaurus", "C. Giganotosaurus", "D. Tyrannosaurus rex"],
+            "answer": "D"
+        },
+        {
+            "question": "Which dinosaur had a distinctive sail-like fin on its back?",
+            "choices": ["A. Spinosaurus", "B. Dimetrodon", "C. Therizinosaurus", "D. Iguanodon"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur is thought to have been able to swim?",
+            "choices": ["A. Allosaurus", "B. Spinosaurus", "C. Velociraptor", "D. Diplodocus"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur had the longest tail relative to its body?",
+            "choices": ["A. Brachiosaurus", "B. Apatosaurus", "C. Diplodocus", "D. Triceratops"],
+            "answer": "C"
+        },
+        {
+            "question": "Which dinosaur had the largest brain relative to its body size?",
+            "choices": ["A. Troodon", "B. Stegosaurus", "C. Iguanodon", "D. Brachiosaurus"],
+            "answer": "A"
+        },
+        {
+            "question": "What is the only known dinosaur with sickle-shaped claws on its feet?",
+            "choices": ["A. Velociraptor", "B. Iguanodon", "C. Spinosaurus", "D. Oviraptor"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur had a dome-shaped skull?",
+            "choices": ["A. Triceratops", "B. Pachycephalosaurus", "C. Stegosaurus", "D. Brachiosaurus"],
+            "answer": "B"
+        },
+        {
+            "question": "What was the fastest dinosaur?",
+            "choices": ["A. Velociraptor", "B. Ornithomimus", "C. Gallimimus", "D. Deinonychus"],
+            "answer": "C"
+        },
+        {
+            "question": "Which dinosaur is known for having long, curved claws?",
+            "choices": ["A. Therizinosaurus", "B. Velociraptor", "C. T. rex", "D. Stegosaurus"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur had over 500 teeth?",
+            "choices": ["A. Triceratops", "B. Nigersaurus", "C. Brachiosaurus", "D. T. rex"],
+            "answer": "B"
+        },
+        {
+            "question": "Which dinosaur's name means 'hollow form'?",
+            "choices": ["A. Coelophysis", "B. Diplodocus", "C. Velociraptor", "D. Apatosaurus"],
+            "answer": "A"
+        },
+        {
+            "question": "Which dinosaur had a distinctive parrot-like beak?",
+            "choices": ["A. Oviraptor", "B. Protoceratops", "C. Psittacosaurus", "D. Iguanodon"],
+            "answer": "C"
         }
     ]
 }
