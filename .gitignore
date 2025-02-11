@@ -1,0 +1,18 @@
+# Ignore environment variables (VERY IMPORTANT!)
+.env
+
+# Ignore dependencies (will be installed via package.json)
+node_modules/
+
+# Ignore logs and system files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore cache files
+.cache/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
