@@ -34,7 +34,7 @@ client.on("messageCreate",(message) => {
             if(channel) {
                 sendFact(channel);
             }
-        }, 360000000); //10 hours
+        }, 36000000); //10 hours
     });
 
     client.login(process.env.TOKEN);

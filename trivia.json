@@ -1,0 +1,24 @@
+{
+    "questions": [
+        {
+            "question": "Which dinosaur had the longest neck?",
+            "choices": ["A. T. rex", "B. Brachiosaurus", "C. Velociraptor", "D. Triceratops"],
+            "answer": "B"
+        },
+        {
+            "question": "What does the word 'dinosaur' mean?",
+            "choices": ["A. Ancient lizard", "B. Giant reptile", "C. Terrible lizard", "D. Fierce predator"],
+            "answer": "C"
+        },
+        {
+            "question": "Which period is known as the age of dinosaurs?",
+            "choices": ["A. Paleozoic", "B. Cenozoic", "C. Mesozoic", "D. Cambrian"],
+            "answer": "C"
+        },
+        {
+            "question": "Which dinosaur is believed to have had feathers?",
+            "choices": ["A. Spinosaurus", "B. Stegosaurus", "C. Velociraptor", "D. Ankylosaurus"],
+            "answer": "C"
+        }
+    ]
+}
