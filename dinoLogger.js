@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -40,12 +40,14 @@ module.exports = {
                 .setTitle('Logged Dinosaurs')
                 .setColor(0x00ff00);
 
+            let description = '';
             for (const [id, data] of Object.entries(dinoData)) {
-                embed.addFields({ name: `🦕 ${data.username}`, value: `${data.name}`, inline:true });
+                description += `🦕 **${data.username}** - {data.name}\n`
             }
+            embed.setDescription(description);
             return message.channel.send({ embeds: [embed] });
         }
-        
+
         //Command to change dino (Maybe implement it so someone can just log a new dino instead)
         if (command === 'changedino') {
             const newDino = args.slice(1).join(' ');
