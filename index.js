@@ -30,7 +30,7 @@ client.on("messageCreate",(message) => {
 
 
     // Dino Logger Commands
-    if (['dino', 'dinos', 'changedino'].includes(command)) {
+    if (['dino', 'dinos', 'changedino', 'logoff'].includes(command)) {
         dinoLogger.execute(message, [command, ...args]);
     };
 });

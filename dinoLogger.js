@@ -19,6 +19,7 @@ module.exports = {
         const userId = message.author.id;
         const username = message.author.username;
 
+        //Command to store dino
         if (command === 'dino') {
             const dinoName = args.slice(1).join(' ');
             if(!dinoName) {
@@ -26,9 +27,10 @@ module.exports = {
             }
             dinoData[userId] = { name: dinoName, username };
             saveData();
-            return message.reply(`Your dino has been logged as **$(dinoName)**.`);
+            message.reply(`Your Dino has been logged as ${dinoName}.`);
+            return this.execute(message, ['dinos']); // Shows updated list
         }
-
+        // Command to view stored dinos
         if (command === 'dinos') {
             if(Object.keys(dinoData).length === 0) {
                 return message.reply('No Dinosaurs have been logged yet.');
@@ -39,7 +41,7 @@ module.exports = {
             }
             return message.reply(response);
         }
-
+        //Command to change dino (Maybe implement it so someone can just log a new dino instead)
         if (command === 'changedino') {
             const newDino = args.slice(1).join(' ');
             if (!newDino) {
@@ -51,6 +53,15 @@ module.exports = {
             dinoData[userId] = { name: newDino, username };
             saveData();
             return message.reply(`Your Dino has been updated to **${newDino}**.`);
+        }
+
+        if (command === 'logoff') {
+            if (dinoData[userId]) {
+                saveData(Data);
+                return message.reply('Your dinosaur info has been removed from the database.');
+            } else {
+                return message.reply('You dont have a logged dino to remove.');
+            }
         }
     }
 };
