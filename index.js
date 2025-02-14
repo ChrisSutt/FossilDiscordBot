@@ -2,27 +2,38 @@ require('dotenv').config();
 const { Client, GatewayIntentBits } = require("discord.js");
 const { sendFact } = require("./factHandler");
 const { sendTriviaQuestion, checkTriviaAnswer } = require("./triviaHandler");
+const dinoLogger = require('./dinoLogger');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const prefix = '!';
 
 client.on("messageCreate",(message) => {
     if (message.author.bot) return;
 
+    const args = message.content.slice(prefix.length).trim().split(/\s+/);
+    const command = args.shift().toLowerCase();
+
     //Fact Command
 
-    if (message.content.toLowerCase() === "!fact") {
+    if (command === 'fact') {
         sendFact(message.channel);
     }
 
     //Trivia Command
     
-    if (message.content.toLowerCase() === "!trivia") {
+    if (command === 'trivia') {
         sendTriviaQuestion(message.channel);
     }
 
     //handle Trivia Answer
     checkTriviaAnswer(message);
-    });
+
+
+    // Dino Logger Commands
+    if (['dino', 'dinos', 'changedino'].includes(command)) {
+        dinoLogger.execute(message, [command, ...args]);
+    };
+});
 
     //Bot ready
     client.once("ready", () => {

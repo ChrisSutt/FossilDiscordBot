@@ -40,10 +40,10 @@ module.exports = {
             return message.reply(response);
         }
 
-        if (command === 'changeDino') {
+        if (command === 'changedino') {
             const newDino = args.slice(1).join(' ');
             if (!newDino) {
-                return message.reply('Please provide a new dinosaur name. Example: `!changeDino Big Rex`');
+                return message.reply('Please provide a new dinosaur name. Example: `!changedino Big Rex`');
             }
             if (!dinoData[userId]) {
                 return message.reply('You dont have a logged dino yet. use `!dino <name>` First.');
