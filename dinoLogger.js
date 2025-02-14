@@ -17,7 +17,8 @@ module.exports = {
     execute(message, args) {
         const command = args[0]?.toLowerCase();
         const userId = message.author.id;
-        const username = message.author.username;
+        const username = message.member ? message.member.displayName : message.author.username; // Updated to display using members nickanames instead
+        // const userColor = message.member?.displayHexColor || '#00ff00' // Get highest role color or default to green
 
         //Command to store dino
         if (command === 'dino') {
@@ -42,7 +43,7 @@ module.exports = {
 
             let description = '';
             for (const [id, data] of Object.entries(dinoData)) {
-                description += `🦕 **${data.username}** - {data.name}\n`
+                description += `🦕 <@${id}> - ${data.name}\n`;
             }
             embed.setDescription(description);
             return message.channel.send({ embeds: [embed] });
@@ -72,6 +73,17 @@ module.exports = {
             } else {
                 return message.reply('You dont have a logged dino to remove.');
             }
+        }
+
+        if (command === 'removedino' ) {
+            const targetUserId = args[1];
+            if(!targetUserId || !dinoData[targetUserId]) {
+                return message.reply('That user does not have a logged dino Or the ID is invalid');
+            }
+            delete dinoData[targetUserId];
+            saveData();
+            message.reply(`Successfully removed the dino log for <@${targetUserId}>.`);
+            return this.execute(message, ['dinos']);
         }
     }
 };
