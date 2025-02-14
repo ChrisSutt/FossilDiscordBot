@@ -35,12 +35,17 @@ module.exports = {
             if(Object.keys(dinoData).length === 0) {
                 return message.reply('No Dinosaurs have been logged yet.');
             }
-            let response = '**Logged Dinosaurs:**\n';
+
+            const embed = new EmbedBuilder()
+                .setTitle('Logged Dinosaurs')
+                .setColor(0x00ff00);
+
             for (const [id, data] of Object.entries(dinoData)) {
-                response += `**${data.username}**: ${data.name}\n`;
+                embed.addFields({ name: `🦕 ${data.username}`, value: `${data.name}`, inline:true });
             }
-            return message.reply(response);
+            return message.channel.send({ embeds: [embed] });
         }
+        
         //Command to change dino (Maybe implement it so someone can just log a new dino instead)
         if (command === 'changedino') {
             const newDino = args.slice(1).join(' ');
