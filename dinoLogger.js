@@ -57,8 +57,11 @@ module.exports = {
 
         if (command === 'logoff') {
             if (dinoData[userId]) {
-                saveData(Data);
-                return message.reply('Your dinosaur info has been removed from the database.');
+                delete dinoData[userId];
+                saveData();
+                fs.writeFileSync(dataFile, JSON.stringify(dinoData, null, 2 )); //Data is saved correctly
+                message.reply('Your dinosaur info has been removed from the database.');
+                return this.execute(message, ['dinos']); // Update list after someone logsoff
             } else {
                 return message.reply('You dont have a logged dino to remove.');
             }
