@@ -2,12 +2,14 @@ const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
 
+// Path to the JSON file to store dinos
 const dataFile = path.join(__dirname, 'dinos.json');
 let dinoData = {};
 
 // Load Existing Data
 if (fs.existsSync(dataFile)) {
     dinoData = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+    cleanUpData();
 }
 
 module.exports = {
@@ -15,23 +17,22 @@ module.exports = {
     description: 'Logs, views, and updates user dinosaurs.',
 
     execute(message, args) {
-        const command = args[0]?.toLowerCase();
+        const command = args.shift()?.toLowerCase(); // Shift to remove command from args
         const userId = message.author.id;
-        const username = message.member ? message.member.displayName : message.author.username; // Updated to display using members nickanames instead
-        // const userColor = message.member?.displayHexColor || '#00ff00' // Get highest role color or default to green
+        const username = message.member ? message.member.displayName : message.author.username;
 
-        //Command to store dino
         if (command === 'dino') {
-            const dinoName = args.slice(1).join(' ');
+            const dinoName = args.join(' ');
             if(!dinoName) {
                 return message.reply('Please provide a dino name. Ex: `!dino White Berta`');
             }
             dinoData[userId] = { name: dinoName, username };
             saveData();
             message.reply(`Your Dino has been logged as ${dinoName}.`);
-            return this.execute(message, ['dinos']); // Shows updated list
+            return this.execute(message, ['dinos']); // Show updated list
         }
-        // Command to view stored dinos
+
+        // Command to view logged dinos
         if (command === 'dinos') {
             if(Object.keys(dinoData).length === 0) {
                 return message.reply('No Dinosaurs have been logged yet.');
@@ -43,15 +44,21 @@ module.exports = {
 
             let description = '';
             for (const [id, data] of Object.entries(dinoData)) {
-                description += `🦕 <@${id}> - ${data.name}\n`;
+                if (id.startsWith("guest_")) {
+                    for (const guest of data) {
+                        description += `🦕 **${guest.username}** - ${guest.name}\n`;
+                    }
+                } else {
+                    description += `🦕 <@${id}> - ${data.name}\n`;
+                }
             }
             embed.setDescription(description);
             return message.channel.send({ embeds: [embed] });
         }
 
-        //Command to change dino (Maybe implement it so someone can just log a new dino instead)
+            // useless command as of right now
         if (command === 'changedino') {
-            const newDino = args.slice(1).join(' ');
+            const newDino = args.join(' ');
             if (!newDino) {
                 return message.reply('Please provide a new dinosaur name. Example: `!changedino Big Rex`');
             }
@@ -63,32 +70,82 @@ module.exports = {
             return message.reply(`Your Dino has been updated to **${newDino}**.`);
         }
 
-        if (command === 'logoff') {
+            // Command to logoff / logout
+        if (command === 'logoff' || command === 'logout') {
             if (dinoData[userId]) {
                 delete dinoData[userId];
                 saveData();
-                fs.writeFileSync(dataFile, JSON.stringify(dinoData, null, 2 )); //Data is saved correctly
                 message.reply('Your dinosaur info has been removed from the database.');
-                return this.execute(message, ['dinos']); // Update list after someone logsoff
+                return this.execute(message, ['dinos']);
             } else {
                 return message.reply('You dont have a logged dino to remove.');
             }
         }
-
-        if (command === 'removedino' ) {
-            const targetUserId = args[1];
-            if(!targetUserId || !dinoData[targetUserId]) {
-                return message.reply('That user does not have a logged dino Or the ID is invalid');
+        
+        // Remove Dino from logs
+        if (command === 'removedino') {
+            const targetUserId = args[0]; // Ensure correct argument reference
+        
+            if (!targetUserId.match(/^\d+$/)) { // Check if it's a valid Discord ID
+                return message.reply('Invalid user ID. Please provide a valid Discord user ID.');
             }
-            delete dinoData[targetUserId];
-            saveData();
+            if (!dinoData[targetUserId]) { // Check if user has a dino logged
+                return message.reply('That user does not have a logged dino.');
+            }
+        
+            delete dinoData[targetUserId]; // Remove user from storage
+            saveData(); // Save changes
+        
             message.reply(`Successfully removed the dino log for <@${targetUserId}>.`);
+            return this.execute(message, ['dinos']); // Refresh list
+        }
+        
+
+            // Command to log a new guest name
+        if (command === 'guest') {
+            const guestName = args.shift();
+            const dinoName = args.join(' ');
+            if (!guestName || !dinoName) {
+                return message.reply('Please provide a guest name and dinosaur name. Example: `!guest Alex Raptor`');
+            }
+            const guestKey = `guest_${guestName.toLowerCase()}`;
+            if (!dinoData[guestKey]) {
+                dinoData[guestKey] = [];
+            }
+            dinoData[guestKey].push({ name: dinoName, username: guestName });
+            saveData();
+            message.reply(`Guest **${guestName}** has been logged with the dinosaur **${dinoName}**.`);
+            return this.execute(message, ['dinos']);
+        }
+
+            // command to remove guest account
+        if (command === 'rmguest') {
+            const guestName = args.join(' ').toLowerCase(); // Properly extract guest name
+            if (!guestName) {
+                return message.reply('Please provide the guest’s name. Example: `!rmguest Alex`');
+            }
+            const guestKey = `guest_${guestName}`;
+            if (!dinoData[guestKey]) {
+                return message.reply(`Guest **${guestName}** is not logged.`);
+            }
+            delete dinoData[guestKey];
+            saveData();
+            message.reply(`Guest **${guestName}** has been removed from the log.`);
             return this.execute(message, ['dinos']);
         }
     }
 };
 
-// Save Dino Data
 function saveData() {
     fs.writeFileSync(dataFile, JSON.stringify(dinoData, null, 2));
+}
+
+function cleanUpData() {
+    for (const key in dinoData) {
+        if (key.startsWith("guest_guest")) {
+            delete dinoData[key];
+        }
+    }
+    saveData();
+    console.log("Removed invalid 'guest_guest' entries from dinos.json");
 }

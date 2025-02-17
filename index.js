@@ -3,6 +3,10 @@ const { Client, GatewayIntentBits } = require("discord.js");
 const { sendFact } = require("./factHandler");
 const { sendTriviaQuestion, checkTriviaAnswer } = require("./triviaHandler");
 const dinoLogger = require('./dinoLogger');
+const path = require('path');
+const fs = require('fs');
+let dinoData = {};
+
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 const prefix = '!';
@@ -11,7 +15,10 @@ const prefix = '!';
 const FACTS_TRIVIA_ROLE = process.env.FACTS_TRIVIA_ROLE;
 const DINO_LOGGER_ROLE = process.env.DINO_LOGGER_ROLE;
 const DINO_LOGGER_CHANNEL = process.env.DINO_LOGGER_CHANNEL;
+const DINO_LOGGER_BROADCAST_CHANNEL = process.env.DINO_LOGGER_BROADCAST_CHANNEL;
 const ADMIN_ROLES = process.env.ADMIN_ROLES.split(",");
+
+const dataFile = path.join(__dirname, 'dinos.json');
 
 client.on("messageCreate",(message) => {
     if (message.author.bot) return;
@@ -42,7 +49,7 @@ client.on("messageCreate",(message) => {
 
 
     // Dino Logger Commands
-    if (['dino', 'dinos', 'changedino', 'logoff'].includes(command)) {
+    if (['dino', 'dinos', 'changedino', 'logoff', 'logout', 'guest', 'rmguest'].includes(command)) {
         if (!message.member.roles.cache.has(DINO_LOGGER_ROLE)) {
             return message.reply("You do not have permission to use this command.");
         }
@@ -77,6 +84,31 @@ client.on("messageCreate",(message) => {
                 sendFact(channel);
             }
         }, 36000000); //10 hours
-    });
+
+            //Auto-broadcast Dino Logger to another channel every 5 minutes
+            let broadcastInterval = 600000; // Default to 10 minutes
+
+            function updateBroadcastInterval() {
+                if (fs.existsSync(dataFile)) {
+                    dinoData = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+                }
+                const loggedCount = Object.keys(dinoData).length;
+                return loggedCount > 3 ? 600000 : 1800000; // 10 minutes if more than 3, otherwise 30 minutes
+            }
+        
+            setInterval(() => {
+                broadcastInterval = updateBroadcastInterval();
+                
+                if (Object.keys(dinoData).length > 0) {
+                    const dinoBroadcastChannel = client.channels.cache.get(DINO_LOGGER_BROADCAST_CHANNEL);
+                    if (dinoBroadcastChannel) {
+                        dinoLogger.execute(
+                            { channel: dinoBroadcastChannel, author: { bot: true } }, // Fake message object
+                            ["dinos"]
+                        );
+                    }
+                }
+            }, updateBroadcastInterval());
+        });
 
     client.login(process.env.TOKEN);
